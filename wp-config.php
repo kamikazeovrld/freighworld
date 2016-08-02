@@ -18,20 +18,41 @@
  * @package WordPress
  */
 
+$env = getenv("CLEARDB_DATABASE_URL");
+
 define('FS_METHOD', 'direct');
 
+
+if($env){
+    $url = parse_url($env);
 // ** MySQL settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define('DB_NAME', 'freighworld_db');
+    /** The name of the database for WordPress */
+    define('DB_NAME', substr($url["path"], 1));
 
-/** MySQL database username */
-define('DB_USER', 'root');
+    /** MySQL database username */
+    define('DB_USER', $url["user"]);
 
-/** MySQL database password */
-define('DB_PASSWORD', 'lucidoccum');
+    /** MySQL database password */
+    define('DB_PASSWORD', $url["pass"]);
 
-/** MySQL hostname */
-define('DB_HOST', 'localhost');
+    /** MySQL hostname */
+    define('DB_HOST', $url["host"]);
+
+}else{
+// ** MySQL settings - You can get this info from your web host ** //
+    /** The name of the database for WordPress */
+    define('DB_NAME', 'freighworld_db');
+
+    /** MySQL database username */
+    define('DB_USER', 'root');
+
+    /** MySQL database password */
+    define('DB_PASSWORD', 'lucidoccum');
+
+    /** MySQL hostname */
+    define('DB_HOST', 'localhost');
+}
+
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8mb4');
